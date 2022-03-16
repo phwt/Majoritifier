@@ -3,6 +3,7 @@ import AlbumsSection from "./components/sections/AlbumsSection";
 import ArtistsSection from "./components/sections/ArtistsSection";
 import LandingSection from "./components/sections/LandingSection";
 import ResultSection from "./components/sections/ResultSection";
+import { FormProvider } from "./contexts/FormContext";
 
 function App() {
     return (
@@ -22,10 +23,12 @@ function App() {
 
                 return (
                     <div id="fullpage-wrapper">
-                        <LandingSection {...renderProps} />
-                        <ArtistsSection {...renderProps} />
-                        <AlbumsSection {...renderProps} />
-                        <ResultSection {...renderProps} />
+                        <FormProvider>
+                            <LandingSection {...renderProps} />
+                            <ArtistsSection {...renderProps} />
+                            <AlbumsSection {...renderProps} />
+                            <ResultSection {...renderProps} />
+                        </FormProvider>
                     </div>
                 );
             }}

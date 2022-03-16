@@ -6,6 +6,7 @@ import {
     Avatar,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
@@ -17,7 +18,9 @@ const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
         readonly SpotifyApi.ArtistObjectFull[]
     >([]);
     const [inputValue, setInputValue] = useState("");
+
     const spotify = useSpotify();
+    const { setArtist } = useForm();
 
     useEffect(() => {
         if (inputValue === "") {
@@ -34,7 +37,10 @@ const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
     }, [value, inputValue, fetch]);
 
     useEffect(() => {
-        if (value) fullpageApi.moveTo(3, 0); // To albums section
+        if (value) {
+            setArtist(value);
+            fullpageApi.moveTo(3, 0); // To albums section
+        }
     }, [value]);
 
     return (
