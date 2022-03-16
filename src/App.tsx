@@ -1,7 +1,7 @@
 import React from "react";
 
 function App() {
-  return <h1>Majoritify</h1>;
+    return <h1>Majoritify</h1>;
 }
 
 export default App;
