@@ -26,9 +26,9 @@ export const AuthenticationProvider = ({ children }: Props) => {
     const login = useCallback(async () => {
         const params = new URLSearchParams({
             response_type: "token",
-            client_id: "15bdccca5a604968b1319c9e05ab9d04",
+            client_id: process.env.REACT_APP_CLIENT_ID as string,
             scope: "playlist-modify-public playlist-modify-private",
-            redirect_uri: "http://localhost:3000",
+            redirect_uri: process.env.REACT_APP_URL as string,
         });
         window.location.replace(
             `https://accounts.spotify.com/authorize?${params.toString()}`
