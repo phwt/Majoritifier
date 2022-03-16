@@ -6,6 +6,7 @@ import {
     useEffect,
     useState,
 } from "react";
+import { useSpotify } from "./SpotifyContext";
 
 interface IAuthenticationContext {
     token?: string;
@@ -16,12 +17,13 @@ const AuthenticationContext = createContext<IAuthenticationContext>(
     {} as IAuthenticationContext
 );
 
-interface Props {
+export const AuthenticationProvider = ({
+    children,
+}: {
     children: ReactNode;
-}
-
-export const AuthenticationProvider = ({ children }: Props) => {
+}) => {
     const [token, setToken] = useState<string>();
+    const spotify = useSpotify();
 
     const login = useCallback(async () => {
         const params = new URLSearchParams({
@@ -44,6 +46,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
 
             if (paramsToken) {
                 setToken(paramsToken);
+                spotify.setAccessToken(paramsToken);
                 window.history.replaceState(null, "", window.location.pathname); // ? Clear query strings after token is acquired
             }
         }

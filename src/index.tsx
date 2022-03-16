@@ -4,12 +4,15 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthenticationProvider } from "./contexts/AuthenticationContext";
+import { SpotifyProvider } from "./contexts/SpotifyContext";
 
 ReactDOM.render(
     <React.StrictMode>
-        <AuthenticationProvider>
-            <App />
-        </AuthenticationProvider>
+        <SpotifyProvider>
+            <AuthenticationProvider>
+                <App />
+            </AuthenticationProvider>
+        </SpotifyProvider>
     </React.StrictMode>,
     document.getElementById("root")
 );
