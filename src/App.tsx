@@ -1,37 +1,35 @@
-import { Button, Container, Typography } from "@mui/material";
-import { useAuthentication } from "./contexts/AuthenticationContext";
+import ReactFullpage from "@fullpage/react-fullpage";
+import AlbumsSection from "./components/sections/AlbumsSection";
+import ArtistsSection from "./components/sections/ArtistsSection";
+import LandingSection from "./components/sections/LandingSection";
+import ResultSection from "./components/sections/ResultSection";
 
 function App() {
-    const { token, login } = useAuthentication();
-
     return (
-        <Container
-            sx={{
-                height: "100vh",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: 2,
+        <ReactFullpage
+            licenseKey="" // TODO: Submit request for license key
+            cards={false}
+            cardsOptions={{
+                perspective: 100,
+                fadeContent: true,
+                fadeBackground: true,
             }}
-        >
-            <Typography variant="h3" component="div" gutterBottom>
-                Majoritify
-            </Typography>
-            {token ? (
-                <pre>{token}</pre>
-            ) : (
-                <Button
-                    variant="contained"
-                    size="large"
-                    onClick={() => {
-                        login();
-                    }}
-                >
-                    Login with Spotify
-                </Button>
-            )}
-        </Container>
+            render={(renderProps) => {
+                if (renderProps.state.initialized) {
+                    renderProps.fullpageApi.setAllowScrolling(false);
+                    renderProps.fullpageApi.setKeyboardScrolling(false);
+                }
+
+                return (
+                    <div id="fullpage-wrapper">
+                        <LandingSection {...renderProps} />
+                        <ArtistsSection {...renderProps} />
+                        <AlbumsSection {...renderProps} />
+                        <ResultSection {...renderProps} />
+                    </div>
+                );
+            }}
+        />
     );
 }
 
