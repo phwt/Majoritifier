@@ -57,7 +57,7 @@ const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
                 filterSelectedOptions
                 value={value}
                 onChange={(
-                    event: any,
+                    event,
                     newValue: SpotifyApi.ArtistObjectFull | null
                 ) => {
                     setOptions(newValue ? [newValue, ...options] : options);

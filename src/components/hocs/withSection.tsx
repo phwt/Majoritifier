@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { fullpageApi } from "@fullpage/react-fullpage";
 
 export interface ISectionProps {
-    state: any;
+    state: object;
     fullpageApi: fullpageApi;
 }
 
