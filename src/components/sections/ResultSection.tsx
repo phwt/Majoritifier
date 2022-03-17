@@ -64,7 +64,12 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
 
     return (
         <>
-            <Typography variant="h4" component="div" gutterBottom>
+            <Typography
+                variant="h4"
+                component="div"
+                color="textPrimary"
+                gutterBottom
+            >
                 Your playlist
             </Typography>
             <List
@@ -75,7 +80,11 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
             >
                 {results.map((track) => (
                     <ListItem key={track.id}>
-                        <ListItemText>
+                        <ListItemText
+                            primaryTypographyProps={{
+                                color: "textPrimary",
+                            }}
+                        >
                             {track.name} - {track.popularity}
                         </ListItemText>
                     </ListItem>

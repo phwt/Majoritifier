@@ -45,7 +45,12 @@ const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
 
     return (
         <>
-            <Typography variant="h4" component="div" gutterBottom>
+            <Typography
+                variant="h4"
+                component="div"
+                color="textPrimary"
+                gutterBottom
+            >
                 Select artist
             </Typography>
             <Autocomplete

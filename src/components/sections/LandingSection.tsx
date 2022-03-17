@@ -12,7 +12,12 @@ const LandingSection = ({ fullpageApi }: ISectionProps) => {
 
     return (
         <>
-            <Typography variant="h3" component="div" gutterBottom>
+            <Typography
+                variant="h3"
+                component="div"
+                color="textPrimary"
+                gutterBottom
+            >
                 Majoritify
             </Typography>
             {token ? (

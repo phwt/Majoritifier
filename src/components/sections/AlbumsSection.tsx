@@ -51,7 +51,12 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
 
     return (
         <>
-            <Typography variant="h4" component="div" gutterBottom>
+            <Typography
+                variant="h4"
+                component="div"
+                color="textPrimary"
+                gutterBottom
+            >
                 Select albums ({albumOptions.length})
             </Typography>
             <List
@@ -77,7 +82,13 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                                     disableRipple
                                 />
                             </ListItemIcon>
-                            <ListItemText>{album.name}</ListItemText>
+                            <ListItemText
+                                primaryTypographyProps={{
+                                    color: "textPrimary",
+                                }}
+                            >
+                                {album.name}
+                            </ListItemText>
                         </ListItemButton>
                     </ListItem>
                 ))}
