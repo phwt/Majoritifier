@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
+import { arrayChunks } from "../../modules/Utils";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
 const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
@@ -33,7 +34,16 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                     )
                 ).flat();
 
-                const tracks = (await spotify.getTracks(albumTracks)).tracks;
+                const albumTracksChunks = arrayChunks(albumTracks, 50);
+
+                const tracks = (
+                    await Promise.all(
+                        albumTracksChunks.map(async (chunk) => {
+                            return (await spotify.getTracks(chunk)).tracks;
+                        })
+                    )
+                ).flat();
+
                 setResults(
                     [...tracks].sort((i, j) => j.popularity - i.popularity)
                 );
