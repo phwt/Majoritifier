@@ -9,6 +9,7 @@ import {
 import { useSpotify } from "./SpotifyContext";
 
 interface IAuthenticationContext {
+    user: SpotifyApi.UserObjectPrivate | null;
     token?: string;
     login: () => void;
 }
@@ -22,6 +23,7 @@ export const AuthenticationProvider = ({
 }: {
     children: ReactNode;
 }) => {
+    const [user, setUser] = useState<SpotifyApi.UserObjectPrivate | null>(null);
     const [token, setToken] = useState<string>();
     const spotify = useSpotify();
 
@@ -47,13 +49,18 @@ export const AuthenticationProvider = ({
             if (paramsToken) {
                 setToken(paramsToken);
                 spotify.setAccessToken(paramsToken);
+
+                (async () => {
+                    setUser(await spotify.getMe());
+                })();
+
                 window.history.replaceState(null, "", window.location.pathname); // ? Clear query strings after token is acquired
             }
         }
     }, [token]);
 
     return (
-        <AuthenticationContext.Provider value={{ token, login }}>
+        <AuthenticationContext.Provider value={{ token, login, user }}>
             {children}
         </AuthenticationContext.Provider>
     );
