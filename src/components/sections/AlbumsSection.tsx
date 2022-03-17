@@ -15,9 +15,13 @@ import { useSpotify } from "../../contexts/SpotifyContext";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
 const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
-    const { artist, albums, setAlbums } = useForm();
+    const { artist, setAlbums } = useForm();
     const { user } = useAuthentication();
     const spotify = useSpotify();
+
+    const [localAlbums, setLocalAlbums] = useState<
+        SpotifyApi.AlbumObjectSimplified[]
+    >([]);
 
     const [albumOptions, setAlbumOptions] = useState<
         SpotifyApi.AlbumObjectSimplified[]
@@ -36,13 +40,13 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
 
     const handleListClick = useCallback(
         (album: SpotifyApi.AlbumObjectSimplified) => {
-            if (albums.indexOf(album) !== -1) {
-                setAlbums(albums.filter((a) => a !== album));
+            if (localAlbums.indexOf(album) !== -1) {
+                setLocalAlbums(localAlbums.filter((a) => a !== album));
             } else {
-                setAlbums([...albums, album]);
+                setLocalAlbums([...localAlbums, album]);
             }
         },
-        [albums]
+        [localAlbums]
     );
 
     return (
@@ -68,7 +72,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                             <ListItemIcon>
                                 <Checkbox
                                     edge="start"
-                                    checked={albums.indexOf(album) !== -1}
+                                    checked={localAlbums.indexOf(album) !== -1}
                                     tabIndex={-1}
                                     disableRipple
                                 />
@@ -81,6 +85,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
             <Button
                 variant="contained"
                 onClick={() => {
+                    setAlbums(localAlbums);
                     fullpageApi.moveTo(4, 0); // To result section
                 }}
             >

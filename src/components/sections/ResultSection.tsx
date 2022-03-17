@@ -19,23 +19,26 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
     const [results, setResults] = useState<SpotifyApi.TrackObjectFull[]>([]);
 
     useEffect(() => {
-        // TODO: Run only once when form is submitted
-        (async () => {
-            setResults([]);
+        if (albums.length) {
+            (async () => {
+                setResults([]);
 
-            const albumTracks = (
-                await Promise.all(
-                    albums.map(async (album) => {
-                        return (
-                            await spotify.getAlbumTracks(album.id)
-                        ).items.map((t) => t.id);
-                    })
-                )
-            ).flat();
+                const albumTracks = (
+                    await Promise.all(
+                        albums.map(async (album) => {
+                            return (
+                                await spotify.getAlbumTracks(album.id)
+                            ).items.map((t) => t.id);
+                        })
+                    )
+                ).flat();
 
-            const tracks = (await spotify.getTracks(albumTracks)).tracks;
-            setResults([...tracks].sort((i, j) => j.popularity - i.popularity));
-        })();
+                const tracks = (await spotify.getTracks(albumTracks)).tracks;
+                setResults(
+                    [...tracks].sort((i, j) => j.popularity - i.popularity)
+                );
+            })();
+        }
     }, [albums]);
 
     const savePlaylist = useCallback(async () => {
