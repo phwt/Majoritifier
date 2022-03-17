@@ -1,4 +1,4 @@
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, Box } from "@mui/material";
 import { useEffect } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
 import withSection, { ISectionProps } from "../hocs/withSection";
@@ -12,14 +12,30 @@ const LandingSection = ({ fullpageApi }: ISectionProps) => {
 
     return (
         <>
-            <Typography
-                variant="h3"
-                component="div"
-                color="textPrimary"
-                gutterBottom
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    mb: 2.5,
+                }}
             >
-                Majoritify
-            </Typography>
+                <Typography
+                    variant="h2"
+                    component="div"
+                    color="textPrimary"
+                    gutterBottom
+                    sx={{
+                        fontWeight: 600,
+                        mb: 1,
+                    }}
+                >
+                    Majoritify
+                </Typography>
+                <Typography color="textPrimary" variant="overline">
+                    Listen to others
+                </Typography>
+            </Box>
             {token ? (
                 <Typography variant="button">Logged In</Typography>
             ) : (

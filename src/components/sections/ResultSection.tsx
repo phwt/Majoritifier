@@ -1,9 +1,11 @@
+import { Replay, Save } from "@mui/icons-material";
 import {
     Typography,
     Button,
     List,
     ListItem,
     ListItemText,
+    Box,
 } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
@@ -75,7 +77,11 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
             <List
                 sx={{
                     overflowY: "auto",
-                    maxHeight: "80vh",
+                    maxHeight: "75vh",
+                    width: {
+                        xs: "100vw",
+                        md: "50vw",
+                    },
                 }}
             >
                 {results.map((track) => (
@@ -90,22 +96,31 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                     </ListItem>
                 ))}
             </List>
-            <Button
-                variant="contained"
-                onClick={() => {
-                    savePlaylist();
+            <Box
+                sx={{
+                    display: "flex",
+                    gap: 2,
                 }}
             >
-                Save as playlist
-            </Button>
-            <Button
-                variant="contained"
-                onClick={() => {
-                    fullpageApi.moveTo(2, 0); // To artists section
-                }}
-            >
-                Start over
-            </Button>
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        savePlaylist();
+                    }}
+                    startIcon={<Save />}
+                >
+                    Save as playlist
+                </Button>
+                <Button
+                    variant="outlined"
+                    onClick={() => {
+                        fullpageApi.moveTo(2, 0); // To artists section
+                    }}
+                    startIcon={<Replay />}
+                >
+                    Start over
+                </Button>
+            </Box>
         </>
     );
 };

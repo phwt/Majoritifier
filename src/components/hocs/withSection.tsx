@@ -15,6 +15,7 @@ const withSection = (Component: React.ComponentType<ISectionProps>) => {
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
+                    height: "100vh",
                     gap: 2,
                 }}
             >

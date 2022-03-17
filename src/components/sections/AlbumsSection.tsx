@@ -63,6 +63,10 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                 sx={{
                     overflowY: "auto",
                     maxHeight: "80vh",
+                    width: {
+                        xs: "100vw",
+                        md: "50vw",
+                    },
                 }}
             >
                 {albumOptions.map((album) => (

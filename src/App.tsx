@@ -14,6 +14,18 @@ function App() {
                 main: "#1DB954",
             },
         },
+        components: {
+            MuiButton: {
+                styleOverrides: {
+                    root: {
+                        borderRadius: 100,
+                    },
+                    contained: {
+                        color: "#FFFFFF",
+                    },
+                },
+            },
+        },
     });
 
     return (
