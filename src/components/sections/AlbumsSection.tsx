@@ -34,6 +34,9 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
     const [albumOptions, setAlbumOptions] = useState<
         SpotifyApi.AlbumObjectSimplified[]
     >([]);
+    const [defaultAlbumOptions, setDefaultAlbumOptions] = useState<
+        SpotifyApi.AlbumObjectSimplified[]
+    >([]);
 
     useEffect(() => {
         if (artist) {
@@ -42,6 +45,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                     market: user?.country,
                 });
                 setAlbumOptions(albums.items);
+                setDefaultAlbumOptions(albums.items);
             })();
         }
     }, [artist]);
@@ -108,8 +112,28 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
         [albumOptions, localAlbums]
     );
 
+    const [searchText, setSearchText] = useState("");
+
+    useEffect(() => {
+        if (searchText.length > 3) {
+            (async () => {
+                const albums = await spotify.searchAlbums(
+                    // ! Can't search by ID irrelevant albums might also be returned such as a cover album that also attributed to the original artist
+                    `album:${searchText} artist:${artist?.name}`,
+                    {
+                        type: "album",
+                        market: user?.country,
+                    }
+                );
+                setAlbumOptions(albums.albums.items);
+            })();
+        } else {
+            setAlbumOptions(defaultAlbumOptions);
+        }
+    }, [searchText]);
+
     return (
-        <FadeSpinner in={!!albumOptions.length}>
+        <FadeSpinner in={!!albumOptions.length || searchText !== ""}>
             <Box
                 sx={{
                     display: "flex",
@@ -120,10 +144,19 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                 <Typography variant="h4" component="div" color="textPrimary">
                     Select albums
                 </Typography>
+                <TextField
+                    label="Search"
+                    variant="filled"
+                    fullWidth
+                    value={searchText}
+                    onChange={(e) => {
+                        setSearchText(e.target.value);
+                    }}
+                />
                 <Paper
                     sx={{
                         overflowY: "auto",
-                        maxHeight: "80vh",
+                        maxHeight: "75vh",
                         width: {
                             xs: "100vw",
                             md: "50vw",
