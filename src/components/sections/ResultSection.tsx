@@ -192,18 +192,22 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                     >
                         {playlistURI ? "Saved" : "Save as a playlist"}
                     </LoadingButton>
-                    {playlistURI && (
-                        <Button
-                            variant="contained"
-                            onClick={() => {
-                                window.open(playlistURI);
-                            }}
-                            startIcon={<QueueMusic />}
-                            sx={{ flexGrow: 1, flexBasis: 0 }}
-                        >
-                            Open playlist on Spotify
-                        </Button>
-                    )}
+
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            window.open(playlistURI);
+                        }}
+                        startIcon={<QueueMusic />}
+                        sx={{
+                            flexGrow: 1,
+                            flexBasis: 0,
+                        }}
+                        disabled={!playlistURI}
+                    >
+                        Open playlist on Spotify
+                    </Button>
+
                     <Button
                         variant="outlined"
                         color="secondary"
