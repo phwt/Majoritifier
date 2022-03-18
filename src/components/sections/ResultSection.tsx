@@ -16,7 +16,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
-import { arrayChunks } from "../../modules/Utils";
+import { arrayChunks, fetchPagingAsync } from "../../modules/Utils";
 import FadeSpinner from "../common/FadeSpinner";
 import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
@@ -36,32 +36,15 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                 const albumTracks = (
                     await Promise.all(
                         albums.map(async (album) => {
-                            const totalPages = Math.ceil(
-                                album.total_tracks / 50
-                            );
-
-                            const trackPromises: Promise<SpotifyApi.AlbumTracksResponse>[] =
-                                [];
-
-                            for (
-                                let offset = 0;
-                                offset < totalPages;
-                                offset++
-                            ) {
-                                trackPromises.push(
+                            return await fetchPagingAsync(
+                                (offset) =>
                                     spotify.getAlbumTracks(album.id, {
                                         limit: 50,
                                         offset: offset * 50,
-                                    })
-                                );
-                            }
-
-                            return (await Promise.all(trackPromises))
-                                .flat()
-                                .map((response) =>
-                                    response.items.map((t) => t.id)
-                                )
-                                .flat();
+                                    }),
+                                album.total_tracks,
+                                50
+                            );
                         })
                     )
                 ).flat();
