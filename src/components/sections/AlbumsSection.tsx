@@ -16,13 +16,10 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
+import { AlbumObjectResponse } from "../../models/AlbumObjectResponse";
 import FadeSpinner from "../common/FadeSpinner";
 import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
-
-interface AlbumObjectResponse extends SpotifyApi.AlbumObjectFull {
-    total_tracks: number;
-}
 
 const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
     const { artist, setAlbums } = useForm();
@@ -135,7 +132,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                 <Button
                     variant="contained"
                     onClick={() => {
-                        setAlbums(localAlbums);
+                        setAlbums(localAlbums as AlbumObjectResponse[]);
                         fullpageApi.moveTo(4, 0); // To result section
                     }}
                     startIcon={<QueueMusic />}

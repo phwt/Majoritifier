@@ -36,9 +36,32 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                 const albumTracks = (
                     await Promise.all(
                         albums.map(async (album) => {
-                            return (
-                                await spotify.getAlbumTracks(album.id)
-                            ).items.map((t) => t.id);
+                            const totalPages = Math.ceil(
+                                album.total_tracks / 50
+                            );
+
+                            const trackPromises: Promise<SpotifyApi.AlbumTracksResponse>[] =
+                                [];
+
+                            for (
+                                let offset = 0;
+                                offset < totalPages;
+                                offset++
+                            ) {
+                                trackPromises.push(
+                                    spotify.getAlbumTracks(album.id, {
+                                        limit: 50,
+                                        offset: offset * 50,
+                                    })
+                                );
+                            }
+
+                            return (await Promise.all(trackPromises))
+                                .flat()
+                                .map((response) =>
+                                    response.items.map((t) => t.id)
+                                )
+                                .flat();
                         })
                     )
                 ).flat();
