@@ -10,7 +10,7 @@ import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
-const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
+const ArtistsSection = ({ state, fullpageApi }: ISectionProps) => {
     const [value, setValue] = useState<SpotifyApi.ArtistObjectFull | null>(
         null
     );
@@ -51,7 +51,7 @@ const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
                 color="textPrimary"
                 gutterBottom
             >
-                Select artist
+                Select an artist
             </Typography>
             <Autocomplete
                 getOptionLabel={(option) => option.name}
@@ -75,15 +75,21 @@ const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
                     <TextField
                         {...params}
                         label="Select an artist"
+                        variant="filled"
                         fullWidth
-                        sx={{ minWidth: 300 }}
+                        sx={{
+                            minWidth: {
+                                xs: "95vw",
+                                md: "45vw",
+                            },
+                        }}
                     />
                 )}
                 renderOption={(props, option) => {
                     return (
                         <li {...props}>
                             <Grid container alignItems="center">
-                                <Grid item>
+                                <Grid item sx={{ mr: 1 }}>
                                     <Avatar
                                         variant="square"
                                         src={option.images[0]?.url}
@@ -95,6 +101,7 @@ const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
                                     <Typography
                                         variant="body2"
                                         color="text.secondary"
+                                        sx={{ fontWeight: 300 }}
                                     >
                                         {option.followers.total.toLocaleString()}{" "}
                                         followers
