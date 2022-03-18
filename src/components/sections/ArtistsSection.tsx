@@ -87,7 +87,7 @@ const ArtistsSection = ({ state, fullpageApi }: ISectionProps) => {
                 )}
                 renderOption={(props, option) => {
                     return (
-                        <li {...props}>
+                        <li {...props} key={option.id}>
                             <Grid container alignItems="center">
                                 <Grid item sx={{ mr: 1 }}>
                                     <Avatar
