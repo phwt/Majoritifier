@@ -10,6 +10,7 @@ import ReactVisibilitySensor from "react-visibility-sensor";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import useFocus from "../../hooks/useFocus";
+import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
 const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
@@ -108,14 +109,10 @@ const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
                                 </Grid>
                                 <Grid item xs>
                                     {option.name}
-                                    <Typography
-                                        variant="body2"
-                                        color="text.secondary"
-                                        sx={{ fontWeight: 300 }}
-                                    >
+                                    <SecondaryTypography>
                                         {option.followers.total.toLocaleString()}{" "}
                                         followers
-                                    </Typography>
+                                    </SecondaryTypography>
                                 </Grid>
                             </Grid>
                         </li>

@@ -15,6 +15,7 @@ import { useAuthentication } from "../../contexts/AuthenticationContext";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import BoxSpinner from "../common/BoxSpinner";
+import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
 interface AlbumObjectResponse extends SpotifyApi.AlbumObjectFull {
@@ -107,18 +108,11 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                                             </TableCell>
                                             <TableCell>
                                                 {album.name}
-                                                <Typography
-                                                    variant="body2"
-                                                    color="text.secondary"
-                                                    sx={{ fontWeight: 300 }}
-                                                >
+                                                <SecondaryTypography>
                                                     {(
                                                         album as SpotifyApi.AlbumObjectFull
-                                                    ).release_date.slice(
-                                                        0,
-                                                        4
-                                                    )}{" "}
-                                                </Typography>
+                                                    ).release_date.slice(0, 4)}
+                                                </SecondaryTypography>
                                             </TableCell>
                                             <TableCell>
                                                 <SecondaryTypography>
@@ -126,7 +120,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                                                         album as AlbumObjectResponse
                                                     ).total_tracks.toLocaleString()}{" "}
                                                     tracks
-                                                </Typography>
+                                                </SecondaryTypography>
                                             </TableCell>
                                         </TableRow>
                                     );

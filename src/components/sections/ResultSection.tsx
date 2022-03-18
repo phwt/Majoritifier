@@ -21,6 +21,7 @@ import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import { arrayChunks } from "../../modules/Utils";
 import BoxSpinner from "../common/BoxSpinner";
+import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
 const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
@@ -121,37 +122,25 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                                             </TableCell>
                                             <TableCell>
                                                 {track.name}
-                                                <Typography
-                                                    variant="body2"
-                                                    color="text.secondary"
-                                                    sx={{ fontWeight: 300 }}
-                                                >
+                                                <SecondaryTypography>
                                                     {track.artists
                                                         .map((a) => a.name)
                                                         .join(", ")}
-                                                </Typography>
+                                                </SecondaryTypography>
                                             </TableCell>
                                             <TableCell>
-                                                <Typography
-                                                    variant="body2"
-                                                    color="text.secondary"
-                                                    sx={{ fontWeight: 300 }}
-                                                >
+                                                <SecondaryTypography>
                                                     {track.album.name}
-                                                </Typography>
+                                                </SecondaryTypography>
                                             </TableCell>
                                             <TableCell>
-                                                <Typography
-                                                    variant="body2"
-                                                    color="text.secondary"
-                                                    sx={{ fontWeight: 300 }}
-                                                >
+                                                <SecondaryTypography>
                                                     {minutes}:
                                                     {(seconds ?? 10) < 10
                                                         ? "0"
                                                         : ""}
                                                     {seconds}
-                                                </Typography>
+                                                </SecondaryTypography>
                                             </TableCell>
                                         </TableRow>
                                     );
