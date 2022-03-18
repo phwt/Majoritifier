@@ -1,4 +1,9 @@
-import { Replay, Save } from "@mui/icons-material";
+import {
+    QueueMusic,
+    Replay,
+    Save,
+    PlaylistAddCheck,
+} from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
     Typography,
@@ -68,6 +73,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
     }, [albums]);
 
     const [saving, setSaving] = useState<boolean>(false);
+    const [playlistURI, setPlaylistURI] = useState("");
     const savePlaylist = useCallback(async () => {
         setSaving(true);
         const playlist = await spotify.createPlaylist(user?.id ?? "", {
@@ -78,6 +84,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
             playlist.id,
             results.map((t) => t.uri)
         );
+        setPlaylistURI(playlist.uri);
         setSaving(false);
     }, [results]);
 
@@ -169,12 +176,27 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                         onClick={() => {
                             savePlaylist();
                         }}
-                        startIcon={<Save />}
-                        sx={{ flexGrow: 1 }}
+                        startIcon={
+                            playlistURI ? <PlaylistAddCheck /> : <Save />
+                        }
+                        sx={{ flexGrow: 1, flexBasis: 0 }}
                         loading={saving}
+                        disabled={!!playlistURI}
                     >
-                        Save as a playlist
+                        {playlistURI ? "Saved" : "Save as a playlist"}
                     </LoadingButton>
+                    {playlistURI && (
+                        <Button
+                            variant="contained"
+                            onClick={() => {
+                                window.open(playlistURI);
+                            }}
+                            startIcon={<QueueMusic />}
+                            sx={{ flexGrow: 1, flexBasis: 0 }}
+                        >
+                            Open playlist on Spotify
+                        </Button>
+                    )}
                     <Button
                         variant="outlined"
                         color="secondary"
@@ -182,7 +204,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                             fullpageApi.moveTo(2, 0); // To artists section
                         }}
                         startIcon={<Replay />}
-                        sx={{ flexGrow: 1 }}
+                        sx={{ flexGrow: 1, flexBasis: 0 }}
                     >
                         Start over
                     </Button>
