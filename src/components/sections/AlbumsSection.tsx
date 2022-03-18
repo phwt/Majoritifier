@@ -1,3 +1,4 @@
+import { QueueMusic } from "@mui/icons-material";
 import {
     Typography,
     Button,
@@ -9,6 +10,7 @@ import {
     TableRow,
     TableCell,
     Paper,
+    Box,
 } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
@@ -58,26 +60,27 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
     );
 
     return (
-        <>
-            <Typography
-                variant="h4"
-                component="div"
-                color="textPrimary"
-                gutterBottom
-            >
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+            }}
+        >
+            <Typography variant="h4" component="div" color="textPrimary">
                 Select albums
             </Typography>
-            {albumOptions.length ? (
-                <Paper
-                    sx={{
-                        overflowY: "auto",
-                        maxHeight: "80vh",
-                        width: {
-                            xs: "100vw",
-                            md: "50vw",
-                        },
-                    }}
-                >
+            <Paper
+                sx={{
+                    overflowY: "auto",
+                    maxHeight: "80vh",
+                    width: {
+                        xs: "100vw",
+                        md: "50vw",
+                    },
+                }}
+            >
+                {albumOptions.length ? (
                     <TableContainer>
                         <Table>
                             <TableBody>
@@ -128,20 +131,21 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </Paper>
-            ) : (
-                <BoxSpinner height="80vh" />
-            )}
+                ) : (
+                    <BoxSpinner height="80vh" />
+                )}
+            </Paper>
             <Button
                 variant="contained"
                 onClick={() => {
                     setAlbums(localAlbums);
                     fullpageApi.moveTo(4, 0); // To result section
                 }}
+                startIcon={<QueueMusic />}
             >
-                Next
+                Create a playlist
             </Button>
-        </>
+        </Box>
     );
 };
 

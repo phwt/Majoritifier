@@ -11,7 +11,14 @@ const LandingSection = ({ fullpageApi }: ISectionProps) => {
     }, [token]);
 
     return (
-        <>
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+            }}
+        >
             <Box
                 sx={{
                     display: "flex",
@@ -49,7 +56,7 @@ const LandingSection = ({ fullpageApi }: ISectionProps) => {
                     Login with Spotify
                 </Button>
             )}
-        </>
+        </Box>
     );
 };
 

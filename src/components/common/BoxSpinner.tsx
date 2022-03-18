@@ -11,6 +11,11 @@ const BoxSpinner = ({ height }: Props) => {
                 height,
                 display: "flex",
                 alignItems: "center",
+                justifyContent: "center",
+                width: {
+                    xs: "100vw",
+                    md: "50vw",
+                },
             }}
         >
             <CircularProgress />

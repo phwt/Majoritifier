@@ -16,10 +16,11 @@ const withSection = (Component: React.ComponentType<ISectionProps>) => {
                     justifyContent: "center",
                     alignItems: "center",
                     height: "100vh",
-                    gap: 2,
                 }}
             >
-                <Component {...props} />
+                <div>
+                    <Component {...props} />
+                </div>
             </Box>
         </div>
     );

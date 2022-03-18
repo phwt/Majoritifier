@@ -2,9 +2,6 @@ import { Replay, Save } from "@mui/icons-material";
 import {
     Typography,
     Button,
-    List,
-    ListItem,
-    ListItemText,
     Box,
     Table,
     TableBody,
@@ -75,26 +72,27 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
     }, [results]);
 
     return (
-        <>
-            <Typography
-                variant="h4"
-                component="div"
-                color="textPrimary"
-                gutterBottom
-            >
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+            }}
+        >
+            <Typography variant="h4" component="div" color="textPrimary">
                 Your playlist
             </Typography>
-            {results.length ? (
-                <Paper
-                    sx={{
-                        overflowY: "auto",
-                        maxHeight: "75vh",
-                        width: {
-                            xs: "100vw",
-                            md: "50vw",
-                        },
-                    }}
-                >
+            <Paper
+                sx={{
+                    overflowY: "auto",
+                    maxHeight: "75vh",
+                    width: {
+                        xs: "100vw",
+                        md: "50vw",
+                    },
+                }}
+            >
+                {results.length ? (
                     <TableContainer>
                         <Table>
                             <TableBody>
@@ -148,10 +146,10 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </Paper>
-            ) : (
-                <BoxSpinner height="75vh" />
-            )}
+                ) : (
+                    <BoxSpinner height="75vh" />
+                )}
+            </Paper>
 
             <Box
                 sx={{
@@ -165,8 +163,9 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                         savePlaylist();
                     }}
                     startIcon={<Save />}
+                    sx={{ flexGrow: 1 }}
                 >
-                    Save as playlist
+                    Save as a playlist
                 </Button>
                 <Button
                     variant="outlined"
@@ -175,11 +174,12 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                         fullpageApi.moveTo(2, 0); // To artists section
                     }}
                     startIcon={<Replay />}
+                    sx={{ flexGrow: 1 }}
                 >
                     Start over
                 </Button>
             </Box>
-        </>
+        </Box>
     );
 };
 
