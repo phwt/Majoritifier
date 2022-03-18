@@ -5,12 +5,14 @@ import {
     Grid,
     Avatar,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import ReactVisibilitySensor from "react-visibility-sensor";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
+import useFocus from "../../hooks/useFocus";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
-const ArtistsSection = ({ state, fullpageApi }: ISectionProps) => {
+const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
     const [value, setValue] = useState<SpotifyApi.ArtistObjectFull | null>(
         null
     );
@@ -43,6 +45,11 @@ const ArtistsSection = ({ state, fullpageApi }: ISectionProps) => {
         }
     }, [value]);
 
+    const [inputRef, setInputFocus] = useFocus();
+    const handleVisibilityChange = useCallback((isVisible: boolean) => {
+        if (isVisible) setInputFocus();
+    }, []);
+
     return (
         <>
             <Typography
@@ -72,18 +79,21 @@ const ArtistsSection = ({ state, fullpageApi }: ISectionProps) => {
                     setInputValue(newInputValue);
                 }}
                 renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label="Select an artist"
-                        variant="filled"
-                        fullWidth
-                        sx={{
-                            minWidth: {
-                                xs: "95vw",
-                                md: "45vw",
-                            },
-                        }}
-                    />
+                    <ReactVisibilitySensor onChange={handleVisibilityChange}>
+                        <TextField
+                            {...params}
+                            inputRef={inputRef}
+                            label="Select an artist"
+                            variant="filled"
+                            fullWidth
+                            sx={{
+                                minWidth: {
+                                    xs: "95vw",
+                                    md: "45vw",
+                                },
+                            }}
+                        />
+                    </ReactVisibilitySensor>
                 )}
                 renderOption={(props, option) => {
                     return (
