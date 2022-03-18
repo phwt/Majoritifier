@@ -10,18 +10,25 @@ function App() {
     const theme = createTheme({
         palette: {
             mode: "dark",
-            primary: {
-                main: "#1DB954",
-            },
+            primary: { main: "#1DB954" },
+            secondary: { main: "#FFFFFF", dark: "#FFFFFF" },
         },
         components: {
             MuiButton: {
                 styleOverrides: {
                     root: {
                         borderRadius: 100,
+                        paddingLeft: "2em",
+                        paddingRight: "2em",
                     },
                     contained: {
                         color: "#FFFFFF",
+                    },
+                    outlined: {
+                        borderWidth: 2,
+                        ":hover": {
+                            borderWidth: 2,
+                        },
                     },
                 },
             },

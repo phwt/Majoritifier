@@ -113,6 +113,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                 </Button>
                 <Button
                     variant="outlined"
+                    color="secondary"
                     onClick={() => {
                         fullpageApi.moveTo(2, 0); // To artists section
                     }}
