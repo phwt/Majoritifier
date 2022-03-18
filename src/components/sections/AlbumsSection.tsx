@@ -7,12 +7,18 @@ import {
     Checkbox,
     ListItemButton,
     ListItemIcon,
+    Avatar,
+    ListItemAvatar,
 } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import withSection, { ISectionProps } from "../hocs/withSection";
+
+interface AlbumObjectResponse extends SpotifyApi.AlbumObjectFull {
+    total_tracks: number;
+}
 
 const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
     const { artist, setAlbums } = useForm();
@@ -86,12 +92,36 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                                     disableRipple
                                 />
                             </ListItemIcon>
+                            <ListItemAvatar>
+                                <Avatar
+                                    variant="square"
+                                    src={album.images[0]?.url} // TODO: Filter for optimal image
+                                    alt={album.name}
+                                />
+                            </ListItemAvatar>
                             <ListItemText
                                 primaryTypographyProps={{
                                     color: "textPrimary",
                                 }}
                             >
                                 {album.name}
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                    sx={{
+                                        fontWeight: 300,
+                                    }}
+                                >
+                                    {(
+                                        album as SpotifyApi.AlbumObjectFull
+                                    ).release_date.slice(0, 4)}{" "}
+                                    ∙{" "}
+                                    {
+                                        (album as AlbumObjectResponse)
+                                            .total_tracks
+                                    }{" "}
+                                    tracks
+                                </Typography>
                             </ListItemText>
                         </ListItemButton>
                     </ListItem>
