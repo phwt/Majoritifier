@@ -12,6 +12,7 @@ import { useAuthentication } from "../../contexts/AuthenticationContext";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import { arrayChunks } from "../../modules/Utils";
+import BoxSpinner from "../common/BoxSpinner";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
 const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
@@ -74,28 +75,33 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
             >
                 Your playlist
             </Typography>
-            <List
-                sx={{
-                    overflowY: "auto",
-                    maxHeight: "75vh",
-                    width: {
-                        xs: "100vw",
-                        md: "50vw",
-                    },
-                }}
-            >
-                {results.map((track) => (
-                    <ListItem key={track.id}>
-                        <ListItemText
-                            primaryTypographyProps={{
-                                color: "textPrimary",
-                            }}
-                        >
-                            {track.name} - {track.popularity}
-                        </ListItemText>
-                    </ListItem>
-                ))}
-            </List>
+            {results.length ? (
+                <List
+                    sx={{
+                        overflowY: "auto",
+                        maxHeight: "75vh",
+                        width: {
+                            xs: "100vw",
+                            md: "50vw",
+                        },
+                    }}
+                >
+                    {results.map((track) => (
+                        <ListItem key={track.id}>
+                            <ListItemText
+                                primaryTypographyProps={{
+                                    color: "textPrimary",
+                                }}
+                            >
+                                {track.name} - {track.popularity}
+                            </ListItemText>
+                        </ListItem>
+                    ))}
+                </List>
+            ) : (
+                <BoxSpinner height="75vh" />
+            )}
+
             <Box
                 sx={{
                     display: "flex",

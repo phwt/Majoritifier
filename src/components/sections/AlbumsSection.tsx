@@ -14,6 +14,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
+import BoxSpinner from "../common/BoxSpinner";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
 interface AlbumObjectResponse extends SpotifyApi.AlbumObjectFull {
@@ -65,68 +66,74 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
             >
                 Select albums ({albumOptions.length})
             </Typography>
-            <List
-                sx={{
-                    overflowY: "auto",
-                    maxHeight: "80vh",
-                    width: {
-                        xs: "100vw",
-                        md: "50vw",
-                    },
-                }}
-            >
-                {albumOptions.map((album) => (
-                    <ListItem key={album.id}>
-                        <ListItemButton
-                            role={undefined}
-                            onClick={() => {
-                                handleListClick(album);
-                            }}
-                            dense
-                        >
-                            <ListItemIcon>
-                                <Checkbox
-                                    edge="start"
-                                    checked={localAlbums.indexOf(album) !== -1}
-                                    tabIndex={-1}
-                                    disableRipple
-                                />
-                            </ListItemIcon>
-                            <ListItemAvatar>
-                                <Avatar
-                                    variant="square"
-                                    src={album.images[0]?.url} // TODO: Filter for optimal image
-                                    alt={album.name}
-                                />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primaryTypographyProps={{
-                                    color: "textPrimary",
+            {albumOptions.length ? (
+                <List
+                    sx={{
+                        overflowY: "auto",
+                        maxHeight: "80vh",
+                        width: {
+                            xs: "100vw",
+                            md: "50vw",
+                        },
+                    }}
+                >
+                    {albumOptions.map((album) => (
+                        <ListItem key={album.id}>
+                            <ListItemButton
+                                role={undefined}
+                                onClick={() => {
+                                    handleListClick(album);
                                 }}
+                                dense
                             >
-                                {album.name}
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{
-                                        fontWeight: 300,
+                                <ListItemIcon>
+                                    <Checkbox
+                                        edge="start"
+                                        checked={
+                                            localAlbums.indexOf(album) !== -1
+                                        }
+                                        tabIndex={-1}
+                                        disableRipple
+                                    />
+                                </ListItemIcon>
+                                <ListItemAvatar>
+                                    <Avatar
+                                        variant="square"
+                                        src={album.images[0]?.url} // TODO: Filter for optimal image
+                                        alt={album.name}
+                                    />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primaryTypographyProps={{
+                                        color: "textPrimary",
                                     }}
                                 >
-                                    {(
-                                        album as SpotifyApi.AlbumObjectFull
-                                    ).release_date.slice(0, 4)}{" "}
-                                    ∙{" "}
-                                    {
-                                        (album as AlbumObjectResponse)
-                                            .total_tracks
-                                    }{" "}
-                                    tracks
-                                </Typography>
-                            </ListItemText>
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
+                                    {album.name}
+                                    <Typography
+                                        variant="body2"
+                                        color="text.secondary"
+                                        sx={{
+                                            fontWeight: 300,
+                                        }}
+                                    >
+                                        {(
+                                            album as SpotifyApi.AlbumObjectFull
+                                        ).release_date.slice(0, 4)}{" "}
+                                        ∙{" "}
+                                        {
+                                            (album as AlbumObjectResponse)
+                                                .total_tracks
+                                        }{" "}
+                                        tracks
+                                    </Typography>
+                                </ListItemText>
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </List>
+            ) : (
+                <BoxSpinner height="80vh" />
+            )}
             <Button
                 variant="contained"
                 onClick={() => {
