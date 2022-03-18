@@ -16,7 +16,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
-import BoxSpinner from "../common/BoxSpinner";
+import FadeSpinner from "../common/FadeSpinner";
 import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
@@ -60,27 +60,27 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
     );
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-            }}
-        >
-            <Typography variant="h4" component="div" color="textPrimary">
-                Select albums
-            </Typography>
-            <Paper
+        <FadeSpinner in={!!albumOptions.length}>
+            <Box
                 sx={{
-                    overflowY: "auto",
-                    maxHeight: "80vh",
-                    width: {
-                        xs: "100vw",
-                        md: "50vw",
-                    },
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
                 }}
             >
-                {albumOptions.length ? (
+                <Typography variant="h4" component="div" color="textPrimary">
+                    Select albums
+                </Typography>
+                <Paper
+                    sx={{
+                        overflowY: "auto",
+                        maxHeight: "80vh",
+                        width: {
+                            xs: "100vw",
+                            md: "50vw",
+                        },
+                    }}
+                >
                     <TableContainer>
                         <Table>
                             <TableBody>
@@ -131,21 +131,19 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                ) : (
-                    <BoxSpinner height="80vh" />
-                )}
-            </Paper>
-            <Button
-                variant="contained"
-                onClick={() => {
-                    setAlbums(localAlbums);
-                    fullpageApi.moveTo(4, 0); // To result section
-                }}
-                startIcon={<QueueMusic />}
-            >
-                Create a playlist
-            </Button>
-        </Box>
+                </Paper>
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        setAlbums(localAlbums);
+                        fullpageApi.moveTo(4, 0); // To result section
+                    }}
+                    startIcon={<QueueMusic />}
+                >
+                    Create a playlist
+                </Button>
+            </Box>
+        </FadeSpinner>
     );
 };
 

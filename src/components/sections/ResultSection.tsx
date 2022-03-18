@@ -17,7 +17,7 @@ import { useAuthentication } from "../../contexts/AuthenticationContext";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import { arrayChunks } from "../../modules/Utils";
-import BoxSpinner from "../common/BoxSpinner";
+import FadeSpinner from "../common/FadeSpinner";
 import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
@@ -72,27 +72,27 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
     }, [results]);
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-            }}
-        >
-            <Typography variant="h4" component="div" color="textPrimary">
-                Your playlist
-            </Typography>
-            <Paper
+        <FadeSpinner in={!!results.length}>
+            <Box
                 sx={{
-                    overflowY: "auto",
-                    maxHeight: "75vh",
-                    width: {
-                        xs: "100vw",
-                        md: "50vw",
-                    },
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
                 }}
             >
-                {results.length ? (
+                <Typography variant="h4" component="div" color="textPrimary">
+                    Your playlist
+                </Typography>
+                <Paper
+                    sx={{
+                        overflowY: "auto",
+                        maxHeight: "75vh",
+                        width: {
+                            xs: "100vw",
+                            md: "50vw",
+                        },
+                    }}
+                >
                     <TableContainer>
                         <Table>
                             <TableBody>
@@ -146,40 +146,38 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                ) : (
-                    <BoxSpinner height="75vh" />
-                )}
-            </Paper>
+                </Paper>
 
-            <Box
-                sx={{
-                    display: "flex",
-                    gap: 2,
-                }}
-            >
-                <Button
-                    variant="contained"
-                    onClick={() => {
-                        savePlaylist();
+                <Box
+                    sx={{
+                        display: "flex",
+                        gap: 2,
                     }}
-                    startIcon={<Save />}
-                    sx={{ flexGrow: 1 }}
                 >
-                    Save as a playlist
-                </Button>
-                <Button
-                    variant="outlined"
-                    color="secondary"
-                    onClick={() => {
-                        fullpageApi.moveTo(2, 0); // To artists section
-                    }}
-                    startIcon={<Replay />}
-                    sx={{ flexGrow: 1 }}
-                >
-                    Start over
-                </Button>
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            savePlaylist();
+                        }}
+                        startIcon={<Save />}
+                        sx={{ flexGrow: 1 }}
+                    >
+                        Save as a playlist
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                            fullpageApi.moveTo(2, 0); // To artists section
+                        }}
+                        startIcon={<Replay />}
+                        sx={{ flexGrow: 1 }}
+                    >
+                        Start over
+                    </Button>
+                </Box>
             </Box>
-        </Box>
+        </FadeSpinner>
     );
 };
 
