@@ -45,7 +45,7 @@ function App() {
                     fadeContent: true,
                     fadeBackground: true,
                 }}
-                normalScrollElements=".MuiList-padding, .MuiAutocomplete-popper"
+                normalScrollElements=".MuiAutocomplete-popper, .MuiPaper-root"
                 render={(renderProps) => {
                     if (renderProps.state.initialized) {
                         renderProps.fullpageApi.setAllowScrolling(false);

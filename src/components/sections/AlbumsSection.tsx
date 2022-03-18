@@ -1,14 +1,14 @@
 import {
     Typography,
     Button,
-    List,
-    ListItem,
-    ListItemText,
     Checkbox,
-    ListItemButton,
-    ListItemIcon,
     Avatar,
-    ListItemAvatar,
+    TableContainer,
+    Table,
+    TableBody,
+    TableRow,
+    TableCell,
+    Paper,
 } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
@@ -64,10 +64,10 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                 color="textPrimary"
                 gutterBottom
             >
-                Select albums ({albumOptions.length})
+                Select albums
             </Typography>
             {albumOptions.length ? (
-                <List
+                <Paper
                     sx={{
                         overflowY: "auto",
                         maxHeight: "80vh",
@@ -77,60 +77,64 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                         },
                     }}
                 >
-                    {albumOptions.map((album) => (
-                        <ListItem key={album.id}>
-                            <ListItemButton
-                                role={undefined}
-                                onClick={() => {
-                                    handleListClick(album);
-                                }}
-                                dense
-                            >
-                                <ListItemIcon>
-                                    <Checkbox
-                                        edge="start"
-                                        checked={
-                                            localAlbums.indexOf(album) !== -1
-                                        }
-                                        tabIndex={-1}
-                                        disableRipple
-                                    />
-                                </ListItemIcon>
-                                <ListItemAvatar>
-                                    <Avatar
-                                        variant="square"
-                                        src={album.images[0]?.url} // TODO: Filter for optimal image
-                                        alt={album.name}
-                                    />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primaryTypographyProps={{
-                                        color: "textPrimary",
-                                    }}
-                                >
-                                    {album.name}
-                                    <Typography
-                                        variant="body2"
-                                        color="text.secondary"
-                                        sx={{
-                                            fontWeight: 300,
-                                        }}
-                                    >
-                                        {(
-                                            album as SpotifyApi.AlbumObjectFull
-                                        ).release_date.slice(0, 4)}{" "}
-                                        ∙{" "}
-                                        {
-                                            (album as AlbumObjectResponse)
-                                                .total_tracks
-                                        }{" "}
-                                        tracks
-                                    </Typography>
-                                </ListItemText>
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
+                    <TableContainer>
+                        <Table>
+                            <TableBody>
+                                {albumOptions.map((album) => {
+                                    const checked =
+                                        localAlbums.indexOf(album) !== -1;
+
+                                    return (
+                                        <TableRow
+                                            key={album.id}
+                                            hover
+                                            selected={checked}
+                                            onClick={() => {
+                                                handleListClick(album);
+                                            }}
+                                            role="checkbox"
+                                            sx={{ cursor: "pointer" }}
+                                        >
+                                            <TableCell padding="checkbox">
+                                                <Checkbox checked={checked} />
+                                            </TableCell>
+                                            <TableCell padding="checkbox">
+                                                <Avatar
+                                                    variant="square"
+                                                    src={album.images[0]?.url} // TODO: Filter for optimal image
+                                                    alt={album.name}
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                {album.name}
+                                                <Typography
+                                                    variant="body2"
+                                                    color="text.secondary"
+                                                    sx={{ fontWeight: 300 }}
+                                                >
+                                                    {(
+                                                        album as SpotifyApi.AlbumObjectFull
+                                                    ).release_date.slice(
+                                                        0,
+                                                        4
+                                                    )}{" "}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <SecondaryTypography>
+                                                    {(
+                                                        album as AlbumObjectResponse
+                                                    ).total_tracks.toLocaleString()}{" "}
+                                                    tracks
+                                                </Typography>
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Paper>
             ) : (
                 <BoxSpinner height="80vh" />
             )}
