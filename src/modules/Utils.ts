@@ -15,14 +15,14 @@ export const arrayChunks = <T>(inputArray: T[], perChunk: number) => {
     }, []);
 };
 
-export const fetchPagingAsync = async <T extends SpotifyApi.PagingObject<any>>(
-    fetchFn: (offset: number) => Promise<T>,
+export const fetchPagingAsync = async <T extends { id: string }>(
+    fetchFn: (offset: number) => Promise<SpotifyApi.PagingObject<T>>,
     total: number,
     pageSize = 50
 ) => {
     const totalPages = Math.ceil(total / pageSize);
 
-    const trackPromises: Promise<SpotifyApi.AlbumTracksResponse>[] = [];
+    const trackPromises: Promise<SpotifyApi.PagingObject<T>>[] = [];
 
     for (let offset = 0; offset < totalPages; offset++) {
         trackPromises.push(fetchFn(offset));
