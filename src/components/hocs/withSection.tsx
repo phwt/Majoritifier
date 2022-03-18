@@ -4,6 +4,7 @@ import { fullpageApi } from "@fullpage/react-fullpage";
 export interface ISectionProps {
     state: object;
     fullpageApi: fullpageApi;
+    order: number;
 }
 
 const withSection = (Component: React.ComponentType<ISectionProps>) => {
@@ -18,9 +19,13 @@ const withSection = (Component: React.ComponentType<ISectionProps>) => {
                     height: "100vh",
                 }}
             >
-                <div>
+                <Box
+                    sx={{
+                        zIndex: 100 - props.order, // ? Sometimes there are overlapped elements from the lower section
+                    }}
+                >
                     <Component {...props} />
-                </div>
+                </Box>
             </Box>
         </div>
     );

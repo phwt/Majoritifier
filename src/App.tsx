@@ -55,10 +55,10 @@ function App() {
                     return (
                         <div id="fullpage-wrapper">
                             <FormProvider>
-                                <LandingSection {...renderProps} />
-                                <ArtistsSection {...renderProps} />
-                                <AlbumsSection {...renderProps} />
-                                <ResultSection {...renderProps} />
+                                <LandingSection {...renderProps} order={0} />
+                                <ArtistsSection {...renderProps} order={1} />
+                                <AlbumsSection {...renderProps} order={2} />
+                                <ResultSection {...renderProps} order={3} />
                             </FormProvider>
                         </div>
                     );
