@@ -12,6 +12,7 @@ import {
     Paper,
     Box,
     TextField,
+    debounce,
 } from "@mui/material";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
@@ -116,18 +117,26 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
 
     const [searchText, setSearchText] = useState("");
 
-    useEffect(() => {
-        if (searchText.length > 3) {
-            (async () => {
+    const fetch = useMemo(
+        () =>
+            debounce(async (value) => {
                 const albums = await spotify.searchAlbums(
                     // ! Can't search by ID irrelevant albums might also be returned such as a cover album that also attributed to the original artist
-                    `album:${searchText} artist:${artist?.name}`,
+                    `album:${value} artist:${artist?.name}`,
                     {
                         type: "album",
                         market: user?.country,
                     }
                 );
                 setAlbumOptions(albums.albums.items);
+            }, 200),
+        [user, artist]
+    );
+
+    useEffect(() => {
+        if (searchText.length > 3) {
+            (async () => {
+                await fetch(searchText);
             })();
         } else {
             setAlbumOptions(defaultAlbumOptions);

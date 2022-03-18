@@ -4,8 +4,9 @@ import {
     TextField,
     Grid,
     Avatar,
+    debounce,
 } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ReactVisibilitySensor from "react-visibility-sensor";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
@@ -25,6 +26,17 @@ const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
     const spotify = useSpotify();
     const { setArtist } = useForm();
 
+    const fetch = useMemo(
+        () =>
+            debounce(async (value) => {
+                const artists = await spotify.searchArtists(value, {
+                    limit: 10,
+                });
+                setOptions(artists.artists.items);
+            }, 200),
+        []
+    );
+
     useEffect(() => {
         if (inputValue === "") {
             setOptions(value ? [value] : []);
@@ -32,10 +44,7 @@ const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
         }
 
         (async () => {
-            const artists = await spotify.searchArtists(inputValue, {
-                limit: 10,
-            });
-            setOptions(artists.artists.items);
+            await fetch(inputValue);
         })();
     }, [value, inputValue, fetch]);
 
