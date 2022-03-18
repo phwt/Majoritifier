@@ -24,7 +24,11 @@ const ArtistsSection = ({ fullpageApi }: ISectionProps) => {
     const [inputValue, setInputValue] = useState("");
 
     const spotify = useSpotify();
-    const { setArtist } = useForm();
+    const { artist, setArtist } = useForm();
+
+    useEffect(() => {
+        if (!artist) setValue(null);
+    }, [artist]);
 
     const fetch = useMemo(
         () =>

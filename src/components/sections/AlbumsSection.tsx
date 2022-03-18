@@ -32,6 +32,10 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
         SpotifyApi.AlbumObjectSimplified[]
     >([]);
 
+    useEffect(() => {
+        if (!artist) setLocalAlbums([]);
+    }, [artist]);
+
     const [albumOptions, setAlbumOptions] = useState<
         SpotifyApi.AlbumObjectSimplified[]
     >([]);
@@ -186,6 +190,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                         setAlbums(localAlbums as AlbumObjectResponse[]);
                         fullpageApi.moveTo(4, 0); // To result section
                     }}
+                    disabled={!localAlbums.length}
                     startIcon={<QueueMusic />}
                 >
                     Create a playlist

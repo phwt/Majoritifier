@@ -28,7 +28,7 @@ import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
 const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
-    const { albums } = useForm();
+    const { albums, clearState } = useForm();
     const spotify = useSpotify();
     const { user } = useAuthentication();
 
@@ -87,6 +87,13 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
         setPlaylistURI(playlist.uri);
         setSaving(false);
     }, [results]);
+
+    const handleStartOver = useCallback(() => {
+        fullpageApi.moveTo(2, 0); // To artists section
+        clearState();
+        setPlaylistURI("");
+        setResults([]);
+    }, [fullpageApi]);
 
     return (
         <FadeSpinner in={!!results.length}>
@@ -200,9 +207,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                     <Button
                         variant="outlined"
                         color="secondary"
-                        onClick={() => {
-                            fullpageApi.moveTo(2, 0); // To artists section
-                        }}
+                        onClick={handleStartOver}
                         startIcon={<Replay />}
                         sx={{ flexGrow: 1, flexBasis: 0 }}
                     >

@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+    createContext,
+    ReactNode,
+    useCallback,
+    useContext,
+    useState,
+} from "react";
 import { AlbumObjectResponse } from "../models/AlbumObjectResponse";
 
 interface IFormContext {
@@ -6,6 +12,7 @@ interface IFormContext {
     setArtist: (artist: SpotifyApi.ArtistObjectFull) => void;
     albums: AlbumObjectResponse[];
     setAlbums: (albums: AlbumObjectResponse[]) => void;
+    clearState: () => void;
 }
 
 const FormContext = createContext<IFormContext>({} as IFormContext);
@@ -15,6 +22,10 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
         null
     );
     const [albums, setAlbums] = useState<AlbumObjectResponse[]>([]);
+    const clearState = useCallback(() => {
+        setArtist(null);
+        setAlbums([]);
+    }, []);
 
     return (
         <FormContext.Provider
@@ -23,6 +34,7 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
                 setArtist,
                 albums,
                 setAlbums,
+                clearState,
             }}
         >
             {children}
