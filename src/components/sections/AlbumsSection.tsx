@@ -53,7 +53,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
     const handleListClick = useCallback(
         (album: SpotifyApi.AlbumObjectSimplified) => {
             if (localAlbums.indexOf(album) !== -1) {
-                setLocalAlbums(localAlbums.filter((a) => a !== album));
+                setLocalAlbums(localAlbums.filter((a) => a.id !== album.id));
             } else {
                 setLocalAlbums([...localAlbums, album]);
             }
@@ -61,11 +61,13 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
         [localAlbums]
     );
 
+    const albumIDs = useMemo(() => localAlbums.map((a) => a.id), [localAlbums]);
+
     const renderOptions = useMemo(
         () => (
             <>
                 {albumOptions.map((album) => {
-                    const checked = localAlbums.indexOf(album) !== -1;
+                    const checked = albumIDs.indexOf(album.id) !== -1;
 
                     return (
                         <TableRow
@@ -109,7 +111,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                 })}
             </>
         ),
-        [albumOptions, localAlbums]
+        [albumOptions, albumIDs]
     );
 
     const [searchText, setSearchText] = useState("");
