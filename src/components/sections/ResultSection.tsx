@@ -6,7 +6,15 @@ import {
     ListItem,
     ListItemText,
     Box,
+    Table,
+    TableBody,
+    TableRow,
+    TableCell,
+    Paper,
+    TableContainer,
+    Avatar,
 } from "@mui/material";
+import { intervalToDuration } from "date-fns";
 import { useCallback, useEffect, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
 import { useForm } from "../../contexts/FormContext";
@@ -76,7 +84,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                 Your playlist
             </Typography>
             {results.length ? (
-                <List
+                <Paper
                     sx={{
                         overflowY: "auto",
                         maxHeight: "75vh",
@@ -86,18 +94,72 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                         },
                     }}
                 >
-                    {results.map((track) => (
-                        <ListItem key={track.id}>
-                            <ListItemText
-                                primaryTypographyProps={{
-                                    color: "textPrimary",
-                                }}
-                            >
-                                {track.name} - {track.popularity}
-                            </ListItemText>
-                        </ListItem>
-                    ))}
-                </List>
+                    <TableContainer>
+                        <Table>
+                            <TableBody>
+                                {results.map((track, index) => {
+                                    const { minutes, seconds } =
+                                        intervalToDuration({
+                                            start: 0,
+                                            end: track.duration_ms,
+                                        });
+
+                                    return (
+                                        <TableRow key={track.id}>
+                                            <TableCell align="center">
+                                                {index + 1}
+                                            </TableCell>
+                                            <TableCell padding="checkbox">
+                                                <Avatar
+                                                    variant="square"
+                                                    src={
+                                                        track.album.images[0]
+                                                            ?.url
+                                                    } // TODO: Filter for optimal image
+                                                    alt={track.name}
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                {track.name}
+                                                <Typography
+                                                    variant="body2"
+                                                    color="text.secondary"
+                                                    sx={{ fontWeight: 300 }}
+                                                >
+                                                    {track.artists
+                                                        .map((a) => a.name)
+                                                        .join(", ")}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Typography
+                                                    variant="body2"
+                                                    color="text.secondary"
+                                                    sx={{ fontWeight: 300 }}
+                                                >
+                                                    {track.album.name}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Typography
+                                                    variant="body2"
+                                                    color="text.secondary"
+                                                    sx={{ fontWeight: 300 }}
+                                                >
+                                                    {minutes}:
+                                                    {(seconds ?? 10) < 10
+                                                        ? "0"
+                                                        : ""}
+                                                    {seconds}
+                                                </Typography>
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Paper>
             ) : (
                 <BoxSpinner height="75vh" />
             )}
