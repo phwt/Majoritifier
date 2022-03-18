@@ -1,4 +1,5 @@
 import { Replay, Save } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
     Typography,
     Button,
@@ -66,15 +67,18 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
         }
     }, [albums]);
 
+    const [saving, setSaving] = useState<boolean>(false);
     const savePlaylist = useCallback(async () => {
+        setSaving(true);
         const playlist = await spotify.createPlaylist(user?.id ?? "", {
             name: "Generated Playlist",
             public: false,
         });
         await spotify.addTracksToPlaylist(
             playlist.id,
-            results.slice(0, 10).map((t) => t.uri)
+            results.map((t) => t.uri)
         );
+        setSaving(false);
     }, [results]);
 
     return (
@@ -160,16 +164,17 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                         gap: 2,
                     }}
                 >
-                    <Button
+                    <LoadingButton
                         variant="contained"
                         onClick={() => {
                             savePlaylist();
                         }}
                         startIcon={<Save />}
                         sx={{ flexGrow: 1 }}
+                        loading={saving}
                     >
                         Save as a playlist
-                    </Button>
+                    </LoadingButton>
                     <Button
                         variant="outlined"
                         color="secondary"
