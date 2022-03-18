@@ -11,8 +11,9 @@ import {
     TableCell,
     Paper,
     Box,
+    TextField,
 } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
 import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
@@ -56,6 +57,57 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
         [localAlbums]
     );
 
+    const renderOptions = useMemo(
+        () => (
+            <>
+                {albumOptions.map((album) => {
+                    const checked = localAlbums.indexOf(album) !== -1;
+
+                    return (
+                        <TableRow
+                            key={album.id}
+                            hover
+                            selected={checked}
+                            onClick={() => {
+                                handleListClick(album);
+                            }}
+                            role="checkbox"
+                            sx={{ cursor: "pointer" }}
+                        >
+                            <TableCell padding="checkbox">
+                                <Checkbox checked={checked} />
+                            </TableCell>
+                            <TableCell padding="checkbox">
+                                <Avatar
+                                    variant="square"
+                                    src={album.images[0]?.url} // TODO: Filter for optimal image
+                                    alt={album.name}
+                                />
+                            </TableCell>
+                            <TableCell>
+                                {album.name}
+                                <SecondaryTypography>
+                                    {(
+                                        album as SpotifyApi.AlbumObjectFull
+                                    ).release_date.slice(0, 4)}
+                                </SecondaryTypography>
+                            </TableCell>
+                            <TableCell>
+                                <SecondaryTypography>
+                                    {(
+                                        album as AlbumObjectResponse
+                                    ).total_tracks.toLocaleString()}{" "}
+                                    tracks
+                                </SecondaryTypography>
+                            </TableCell>
+                        </TableRow>
+                    );
+                })}
+            </>
+        ),
+        [albumOptions, localAlbums]
+    );
+
     return (
         <FadeSpinner in={!!albumOptions.length}>
             <Box
@@ -80,52 +132,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                 >
                     <TableContainer>
                         <Table>
-                            <TableBody>
-                                {albumOptions.map((album) => {
-                                    const checked =
-                                        localAlbums.indexOf(album) !== -1;
-
-                                    return (
-                                        <TableRow
-                                            key={album.id}
-                                            hover
-                                            selected={checked}
-                                            onClick={() => {
-                                                handleListClick(album);
-                                            }}
-                                            role="checkbox"
-                                            sx={{ cursor: "pointer" }}
-                                        >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox checked={checked} />
-                                            </TableCell>
-                                            <TableCell padding="checkbox">
-                                                <Avatar
-                                                    variant="square"
-                                                    src={album.images[0]?.url} // TODO: Filter for optimal image
-                                                    alt={album.name}
-                                                />
-                                            </TableCell>
-                                            <TableCell>
-                                                {album.name}
-                                                <SecondaryTypography>
-                                                    {(
-                                                        album as SpotifyApi.AlbumObjectFull
-                                                    ).release_date.slice(0, 4)}
-                                                </SecondaryTypography>
-                                            </TableCell>
-                                            <TableCell>
-                                                <SecondaryTypography>
-                                                    {(
-                                                        album as AlbumObjectResponse
-                                                    ).total_tracks.toLocaleString()}{" "}
-                                                    tracks
-                                                </SecondaryTypography>
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                            </TableBody>
+                            <TableBody>{renderOptions}</TableBody>
                         </Table>
                     </TableContainer>
                 </Paper>
