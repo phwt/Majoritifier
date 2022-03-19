@@ -31,7 +31,7 @@ export const AuthenticationProvider = ({
         const params = new URLSearchParams({
             response_type: "token",
             client_id: process.env.REACT_APP_CLIENT_ID as string,
-            scope: "playlist-modify-public playlist-modify-private",
+            scope: "user-read-private playlist-modify-public playlist-modify-private", // TODO: add user-library-read when user library is available as an input
             redirect_uri: process.env.REACT_APP_URL as string,
         });
         window.location.replace(
