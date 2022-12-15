@@ -102,6 +102,29 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                                         album as SpotifyApi.AlbumObjectFull
                                     ).release_date.slice(0, 4)}
                                 </SecondaryTypography>
+                                <Button
+                                    variant="outlined"
+                                    size="small"
+                                    target="_blank"
+                                    href={`https://open.spotify.com/album/${album.id}`}
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+                                    }}
+                                    sx={{
+                                        marginTop: "0.5em",
+                                    }}
+                                    startIcon={
+                                        <img
+                                            src="/Spotify_Icon_RGB_Green.png"
+                                            alt="image"
+                                            style={{
+                                                height: "1em",
+                                            }}
+                                        />
+                                    }
+                                >
+                                    Open Spotify
+                                </Button>
                             </TableCell>
                             <TableCell>
                                 <SecondaryTypography>

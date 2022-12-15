@@ -198,14 +198,22 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                         onClick={() => {
                             window.open(playlistURI);
                         }}
-                        startIcon={<QueueMusic />}
+                        startIcon={
+                            <img
+                                src="/Spotify_Icon_RGB_White.png"
+                                alt="image"
+                                style={{
+                                    height: "1em",
+                                }}
+                            />
+                        }
                         sx={{
                             flexGrow: 1,
                             flexBasis: 0,
                         }}
                         disabled={!playlistURI}
                     >
-                        Open playlist on Spotify
+                        Listen on Spotify
                     </Button>
 
                     <Button
