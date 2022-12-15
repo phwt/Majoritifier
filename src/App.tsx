@@ -1,5 +1,6 @@
 import ReactFullpage from "@fullpage/react-fullpage";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import LogoutOverlay from "./components/common/LogoutOverlay";
 import AlbumsSection from "./components/sections/AlbumsSection";
 import ArtistsSection from "./components/sections/ArtistsSection";
 import LandingSection from "./components/sections/LandingSection";
@@ -38,7 +39,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <ReactFullpage
-                licenseKey="" // TODO: Submit request for license key
+                licenseKey=""
                 cards={false}
                 cardsOptions={{
                     perspective: 100,
@@ -64,6 +65,7 @@ function App() {
                     );
                 }}
             />
+            <LogoutOverlay />
         </ThemeProvider>
     );
 }
