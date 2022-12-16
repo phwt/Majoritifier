@@ -37,7 +37,7 @@ const LandingSection = ({ fullpageApi }: ISectionProps) => {
                         mb: 1,
                     }}
                 >
-                    Majoritify
+                    Majoritifier
                 </Typography>
                 <Typography color="textPrimary" variant="overline">
                     Listen to others
