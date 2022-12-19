@@ -19,6 +19,7 @@ import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import { arrayChunks, fetchPagingAsync } from "../../modules/Utils";
 import FadeSpinner from "../common/FadeSpinner";
+import Logo from "../common/Logo";
 import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
@@ -193,15 +194,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                         onClick={() => {
                             window.open(playlistURI);
                         }}
-                        startIcon={
-                            <img
-                                src="/Spotify_Icon_RGB_White.png"
-                                alt="image"
-                                style={{
-                                    height: "1em",
-                                }}
-                            />
-                        }
+                        startIcon={<Logo />}
                         sx={{
                             flexGrow: 1,
                             flexBasis: 0,
