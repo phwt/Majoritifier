@@ -1,6 +1,7 @@
 import { Typography, Button, Box } from "@mui/material";
 import { useEffect } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContext";
+import Logo from "../common/Logo";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
 const LandingSection = ({ fullpageApi }: ISectionProps) => {
@@ -37,7 +38,7 @@ const LandingSection = ({ fullpageApi }: ISectionProps) => {
                         mb: 1,
                     }}
                 >
-                    Majoritify
+                    Majoritifier
                 </Typography>
                 <Typography color="textPrimary" variant="overline">
                     Listen to others
@@ -49,6 +50,7 @@ const LandingSection = ({ fullpageApi }: ISectionProps) => {
                 <Button
                     variant="contained"
                     size="large"
+                    startIcon={<Logo />}
                     onClick={() => {
                         login();
                     }}

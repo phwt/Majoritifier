@@ -43,7 +43,7 @@ export const AuthenticationProvider = ({
         if (!token) {
             const hash = window.location.hash.substring(1);
             const paramsToken = new URL(
-                `https://majoritify.web.app/?${hash}`
+                `https://majoritifier.web.app/?${hash}`
             ).searchParams.get("access_token");
 
             if (paramsToken) {

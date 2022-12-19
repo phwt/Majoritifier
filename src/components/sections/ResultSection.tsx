@@ -1,9 +1,4 @@
-import {
-    QueueMusic,
-    Replay,
-    Save,
-    PlaylistAddCheck,
-} from "@mui/icons-material";
+import { Replay, Save, PlaylistAddCheck } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
     Typography,
@@ -24,6 +19,7 @@ import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import { arrayChunks, fetchPagingAsync } from "../../modules/Utils";
 import FadeSpinner from "../common/FadeSpinner";
+import Logo from "../common/Logo";
 import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
@@ -198,14 +194,14 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                         onClick={() => {
                             window.open(playlistURI);
                         }}
-                        startIcon={<QueueMusic />}
+                        startIcon={<Logo />}
                         sx={{
                             flexGrow: 1,
                             flexBasis: 0,
                         }}
                         disabled={!playlistURI}
                     >
-                        Open playlist on Spotify
+                        Listen on Spotify
                     </Button>
 
                     <Button
