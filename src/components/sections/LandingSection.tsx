@@ -25,7 +25,7 @@ const LandingSection = ({ fullpageApi }: ISectionProps) => {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    mb: 2.5,
+                    mb: 5,
                 }}
             >
                 <Typography
@@ -41,7 +41,7 @@ const LandingSection = ({ fullpageApi }: ISectionProps) => {
                     Majoritifier
                 </Typography>
                 <Typography color="textPrimary" variant="overline">
-                    Listen to others
+                    Your playlist, handpicked by the others
                 </Typography>
             </Box>
             {token ? (
