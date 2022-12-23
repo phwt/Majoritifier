@@ -20,6 +20,7 @@ import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import { AlbumObjectResponse } from "../../models/AlbumObjectResponse";
 import FadeSpinner from "../common/FadeSpinner";
+import LinkButton from "../common/LinkButton";
 import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
 
@@ -102,29 +103,7 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                                         album as SpotifyApi.AlbumObjectFull
                                     ).release_date.slice(0, 4)}
                                 </SecondaryTypography>
-                                <Button
-                                    variant="outlined"
-                                    size="small"
-                                    target="_blank"
-                                    href={`https://open.spotify.com/album/${album.id}`}
-                                    onClick={(event) => {
-                                        event.stopPropagation();
-                                    }}
-                                    sx={{
-                                        marginTop: "0.5em",
-                                    }}
-                                    startIcon={
-                                        <img
-                                            src="/Spotify_Icon_RGB_Green.png"
-                                            alt="image"
-                                            style={{
-                                                height: "1em",
-                                            }}
-                                        />
-                                    }
-                                >
-                                    Open Spotify
-                                </Button>
+                                <LinkButton type="album" id={album.id} />
                             </TableCell>
                             <TableCell>
                                 <SecondaryTypography>

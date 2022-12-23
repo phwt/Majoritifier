@@ -19,6 +19,7 @@ import { useForm } from "../../contexts/FormContext";
 import { useSpotify } from "../../contexts/SpotifyContext";
 import { arrayChunks, fetchPagingAsync } from "../../modules/Utils";
 import FadeSpinner from "../common/FadeSpinner";
+import LinkButton from "../common/LinkButton";
 import Logo from "../common/Logo";
 import SecondaryTypography from "../common/SecondaryTypography";
 import withSection, { ISectionProps } from "../hocs/withSection";
@@ -145,6 +146,11 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                                                         .map((a) => a.name)
                                                         .join(", ")}
                                                 </SecondaryTypography>
+                                                <LinkButton
+                                                    type="track"
+                                                    id={track.id}
+                                                    text="Listen on Spotify"
+                                                />
                                             </TableCell>
                                             <TableCell>
                                                 <SecondaryTypography>
