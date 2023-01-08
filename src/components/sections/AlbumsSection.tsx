@@ -175,8 +175,9 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                         overflowY: "auto",
                         maxHeight: "75vh",
                         width: {
-                            xs: "100vw",
-                            md: "50vw",
+                            xs: "95vw",
+                            md: "75vw",
+                            lg: "50vw",
                         },
                     }}
                 >
