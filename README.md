@@ -6,6 +6,8 @@ Did your favorite artist have a lot of songs, or did your favorite movie soundtr
 
 [**Majoritifier**](https://majoritifier.web.app) can help you with that - ever noticed the number of plays next to the track name or on the artist page? That reflects the track's popularity in the same artist, and we can rank them and create a personalized playlist just for you!
 
+![Majoritifier Demo](https://user-images.githubusercontent.com/28344318/211208161-1ccbfece-3f67-4a3e-a796-9123d860cacd.gif)
+
 ### Try now! - [majoritifier.web.app](https://majoritifier.web.app)
 
 ## How does this work?
