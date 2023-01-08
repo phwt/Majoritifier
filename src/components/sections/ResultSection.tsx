@@ -178,6 +178,10 @@ const AlbumsSection = ({ fullpageApi }: ISectionProps) => {
                     sx={{
                         display: "flex",
                         gap: 2,
+                        flexDirection: {
+                            xs: "column",
+                            lg: "row",
+                        },
                     }}
                 >
                     <LoadingButton
